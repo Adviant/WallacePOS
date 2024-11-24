@@ -1,22 +1,18 @@
-### Note: WallacePOS is not longer actively maintained. If you would like to become a maintainer of this project please let me know.
+## Notice
 
-# WallacePOS
-## An intuitive & modern web based POS system
-![logo](https://wallacepos.com/images/wallacepos_logo_600.png)
+WallacePOS is **EOL**. It is no longer being maintained by [micwallace/wallacepos](https://github.com/micwallace/wallacepos). 
 
-WallacePOS uses the power of the modern web to provide an easy to use & extensible POS system.
+This repo is being kept as inspiration for a new POS using seprate frontend and backend technologies powered by Laravel & React. 
 
-It supports standard POS hardware including receipt printers, cashdraws and barcode scanners.
+If you are wanting to test out this software there will be a docker file added to this repo so that it can be run in a container.
 
-With a rich administration dashboard and reporting features, WallacePOS brings benefits to managers and staff alike.
+**It is not recommended to deploy WallacePOS in a production evniroment**
 
-Take your business into the cloud with WallacePOS!
+## Original Instlation Guide
 
-To find out more about WallacePOS, head over to [wallacepos.com](https://wallacepos.com)
+Below is the original installation guide if you would like to try out WallacePOS on bare metal.
 
-If you find that WallacePOS is the perfect companion for your business, please donate to support further development.
-
-[![Donate to WallacePOS](https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=783UMXCNZGL68)
+**It is not recommended to deploy WallacePOS in a production evniroment**
 
 ## Server Prerequisites
 
@@ -93,30 +89,8 @@ WallacePOS requires:
    
 2. Run `composer install` in your install directory to update PHP dependencies (you may need to install composer first).
 
-3. Visit /installer in your browser & follow the installation wizard.
+3. Run `cd /api` then `node server.js`
 
-4. Login to the admin dashboard at /admin, from the menu go to Settings -> Utilities and make sure the feed server has been started successfully.
+5. Visit /installer in your browser & follow the installation wizard.
 
-## Deploying using dokku
-
-To deploy WallacePOS on dokku:
-
-1. Install the [dokku-apt](https://github.com/F4-Group/dokku-apt) plugin on your dokku host.
-
-2. Fork the WallacePOS to a PRIVATE repo (IMPORTANT), edit /library/wpos/.dbconfig.json and fill in your own values.
-
-    **OR**
-
-   Use my [dokku mysql plugin](https://github.com/micwallace/dokku-mysql-server-plugin) to create and link the database automagically.   
-
-3. Commit deploy in the usual manner.
-
-4. Setup persistent storage by running:
-
-   `dokku storage:mount %APP_NAME% /var/lib/dokku/data/storage/%APP_NAME%:/app/docs`
-   
-   WARINING: Failure to do so will lead to data loss during subsequent upgrades.
-
-5. Access /installer/?install from the web browser to install the database schema & templates
-
-6. Login to the admin dashboard at /admin using credentials admin:admin & change the default passwords in Settings -> Staff & Admins!
+6. Login to the admin dashboard at /admin, from the menu go to Settings -> Utilities and make sure the feed server has been started successfully.
