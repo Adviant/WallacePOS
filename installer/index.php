@@ -161,16 +161,16 @@ function writeDatabaseConfig(){
     return true;
 }
 
-function addAnalytics($type){
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => 'https://admin.wallaceit.com.au/customerapi/stats/add/'.$type.'?hostname='.$_SERVER['SERVER_NAME'].'&version='.(isset($_REQUEST['version']) ? $_REQUEST['version'] : DbUpdater::getLatestVersionName()),
-        CURLOPT_USERAGENT => 'WallacePOS_Installer'
-    ));
-    curl_exec($curl);
-    curl_close($curl);
-}
+// function addAnalytics($type){
+//     $curl = curl_init();
+//     curl_setopt_array($curl, array(
+//         CURLOPT_RETURNTRANSFER => 1,
+//         CURLOPT_URL => 'https://admin.wallaceit.com.au/customerapi/stats/add/'.$type.'?hostname='.$_SERVER['SERVER_NAME'].'&version='.(isset($_REQUEST['version']) ? $_REQUEST['version'] : DbUpdater::getLatestVersionName()),
+//         CURLOPT_USERAGENT => 'WallacePOS_Installer'
+//     ));
+//     curl_exec($curl);
+//     curl_close($curl);
+// }
 
 session_start();
 // installer scripts
@@ -179,7 +179,7 @@ if (isset($_REQUEST['upgrade'])){
     $dbUpdater = new DbUpdater();
     $result = $dbUpdater->upgrade((isset($_REQUEST['version']) ? $_REQUEST['version'] : null));
     // register analytics
-    addAnalytics("upgrade");
+    // addAnalytics("upgrade");
     echo($result);
     exit;
 }
@@ -190,7 +190,7 @@ if (isset($_REQUEST['install'])){
     $dbUpdater = new DbUpdater();
     $result = $dbUpdater->install();
     // register analytics
-    addAnalytics("install");
+    // addAnalytics("install");
     echo($result);
     exit;
 }
