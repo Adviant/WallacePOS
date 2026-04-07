@@ -5,12 +5,15 @@
   "description": "Web based POS system",
   "main": "/app/api/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "npx @tailwindcss/cli -i assets/css/app.css -o assets/css/tailwind.css"
   },
   "author": "WallaceIT",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "socket.io": "~1.7.x"
+    "@tailwindcss/cli": "^4.2.2",
+    "daisyui": "^5.5.19",
+    "socket.io": "~1.7.x",
+    "tailwindcss": "^4.2.2"
   },
   "engines": {
     "node": "~4.2.x"

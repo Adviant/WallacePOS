@@ -1,5 +1,3 @@
-.idea/
-.jshintrc
-nbproject
+node_modules/
 library/wpos/.dbconfig.json
 docs/
