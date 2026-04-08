@@ -31,11 +31,10 @@ gd
 WallacePOS can run with or without SSL but it is recommended to use SSL. Use Certbot to genarate certificates or use your own. Copy the virtual host config below and enter your details in the **%*%** locations. 
 ```
 <VirtualHost *:443>
-    DocumentRoot %/your_install_dir%
+    DocumentRoot "%/your_install_dir%"
     ServerName %your.server.fqdn%
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ErrorLog "logs/error.log"
+    CustomLog "logs/access.log" common
 
     SSLEngine on
         SSLCipherSuite !ADH:!DSS:!RC4:HIGH:+3DES:+RC4
@@ -44,57 +43,44 @@ WallacePOS can run with or without SSL but it is recommended to use SSL. Use Cer
         SSLCertificateKeyFile %key_location%
         SSLCertificateChainFile %cert_chain_location%
 
-        <Directory %/your_install_dir%>
-            AllowOverride all
-        </Directory>
+    DocumentRoot "%/your_install_dir%"
+    ServerName %your.server.fqdn%
+    ErrorLog "logs/error.log"
+    CustomLog "logs/access.log" common
 
-        # WSPROXY CONF
-        ProxyRequests Off
-        ProxyPreserveHost On
-        <Proxy *>
-            Order deny,allow
-            Allow from all
-        </Proxy>
-        RewriteEngine On
-        RewriteCond %{HTTP:Connection} Upgrade [NC]
+    RewriteEngine On
+        RewriteCond %{QUERY_STRING} transport=websocket [NC]
         RewriteRule /(.*) ws://localhost:8080/$1 [P,L]
-        ProxyPass        /socket.io http://localhost:8080/socket.io/
-        ProxyPassReverse /socket.io http://localhost:8080/socket.io/
+        ProxyPass /socket.io/ http://localhost:8080/socket.io/
+        ProxyPassReverse /socket.io/ http://localhost:8080/socket.io/
         <Location /socket.io>
             Order allow,deny
             Allow from all
         </Location>
 </VirtualHost>
 ```
+
 If you are **NOT** using SSL copy the virtual host config below and enter your details in the **%*%** locations.
+
  ```
 <VirtualHost *:80>
-    DocumentRoot %/your_install_dir%
+    DocumentRoot "%/your_install_dir%"
     ServerName %your.server.fqdn%
+    ErrorLog "logs/error.log"
+    CustomLog "logs/access.log" common
 
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    RewriteEngine On
 
-        <Directory %/your_install_dir%>
-            AllowOverride all
-        </Directory>
+    RewriteCond %{QUERY_STRING} transport=websocket [NC]
+    RewriteRule /(.*) ws://localhost:8080/$1 [P,L]
 
-        # WSPROXY CONF
-        ProxyRequests Off
-        ProxyPreserveHost On
-        <Proxy *>
-            Order deny,allow
-            Allow from all
-        </Proxy>
-        RewriteEngine On
-        RewriteCond %{HTTP:Connection} Upgrade [NC]
-        RewriteRule /(.*) ws://localhost:8080/$1 [P,L]
-        ProxyPass        /socket.io http://localhost:8080/socket.io/
-        ProxyPassReverse /socket.io http://localhost:8080/socket.io/
-        <Location /socket.io>
-            Order allow,deny
-            Allow from all
-        </Location>
+    ProxyPass /socket.io/ http://localhost:8080/socket.io/
+    ProxyPassReverse /socket.io/ http://localhost:8080/socket.io/
+
+     <Location /socket.io>
+           Order allow,deny
+           Allow from all
+     </Location>
 </VirtualHost>
 ```
 
